@@ -1,0 +1,4 @@
+void ctl_Calculation_Of_Time(TUINT32 CTL_u32Ticks, TUINT8* u8StrPtr)
+{
+  sprintf((char*)u8StrPtr,"%2d:%2d:%2d", CTL_u32Ticks / 3600, (CTL_u32Ticks % 3600) / 60, CTL_u32Ticks % 60);
+}
