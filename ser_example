@@ -1,1 +1,24 @@
 
+TUINT8 au8Temp[256];
+
+sprintf((char*)au8Temp, "test");
+SER1_Send_Protocol(au8Temp, 4);
+
+
+
+
+
+
+  if (!SER1_u8Valid_Data())
+  {
+    SER1_Protocol_Handling(100);
+  }
+  else
+  {
+  }
+
+
+
+
+// Test Protocol
+65 04 74 65 73 74 77 0D       "test" in hex
