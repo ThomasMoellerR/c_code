@@ -1,28 +1,25 @@
 
 /******************************************************************************
-
-   File                :     ser1.c
-   Version             :     12
-   
-   Version Temp-File   :     3
-   
+*  File           :  ser1.c
+*  Version        :  1
+*  Last Changes   :  2019-05-12 11:06:06
 ******************************************************************************/
 
 /******************************************************************************
-   Include-Files
-******************************************************************************/   
+*  Include Files
+******************************************************************************/
 
 #include <string.h>
 #include "typ.h"
 #include "ser1.h"
 
 /******************************************************************************
-   Local Constants
-******************************************************************************/  
+*  Local Constants
+******************************************************************************/
 
 /******************************************************************************
-   Local Type-Definitions
-******************************************************************************/   
+*  Local Type Definitions
+******************************************************************************/
 
 enum tyen_Operation
 {
@@ -34,8 +31,8 @@ enum tyen_Operation
 };
 
 /******************************************************************************
-   Local Variables
-******************************************************************************/   
+*  Local Variables
+******************************************************************************/
 
 enum tyen_Operation ser1_Operation = PROOF_STX;
 
@@ -50,17 +47,39 @@ TUINT16 ser1_u16RecBuf_Tail = 0;
 TUINT8 ser1_u8Valid_Data;
 
 /******************************************************************************
-   Local Function-Prototypes
-******************************************************************************/  
+*  Global Variables
+******************************************************************************/
+
+// Sending
+TUINT8 SER1_u8SendPollingRunning; 				// Indicates the polling state if polling is used. For DMA transfer not relevant
+TUINT8 SER1_au8SndBuf[SER1_SNDBUF_LEN]; 		// Frame with payload to send
+TUINT8 SER1_TransmitFrameLength;				// For DMA transfer
+
+// Receiving
+TUINT8 SER1_au8RecBuf[SER1_RECBUF_LEN]; 		// Extracted payload of received frame
+TUINT8 SER1_u8ReceivedPayloadLength; 					// Number of data in received payload
+
+/******************************************************************************
+*  Local Function Prototypes
+******************************************************************************/
 
 void ser1_Start_Sending (void);
 TUINT8 ser1_XORChecksum(TUINT8* pu8Data, TUINT8 u8Len);
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Local Functions
+******************************************************************************/
+
+/******************************************************************************
+*  Global Functions
+******************************************************************************/
+
+/******************************************************************************
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 void SER1_Ini (void)
 {
@@ -70,10 +89,11 @@ void SER1_Ini (void)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 TUINT8 ser1_XORChecksum(TUINT8* pu8Data, TUINT8 u8Len)
 {
@@ -83,9 +103,10 @@ TUINT8 ser1_XORChecksum(TUINT8* pu8Data, TUINT8 u8Len)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
 ******************************************************************************/
 
 void SER1_Protocol_Handling(TUINT8 u8Cycles)
@@ -190,10 +211,11 @@ void SER1_Protocol_Handling(TUINT8 u8Cycles)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 TUINT8 SER1_u8Valid_Data(void)
 {
@@ -213,10 +235,11 @@ TUINT8 SER1_u8Valid_Data(void)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 void SER1_Send_Protocol (TUINT8* pu8Data, TUINT8 u8Len)
 {
@@ -253,15 +276,14 @@ void SER1_Send_Protocol (TUINT8* pu8Data, TUINT8 u8Len)
 }
 
 
-
-
 #ifdef SER1_SENDING_MODE_POLLING
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 void SER1_Send_String (TUINT8* pu8Data, TUINT8 u8Len)
 {
@@ -279,11 +301,13 @@ void SER1_Send_String (TUINT8* pu8Data, TUINT8 u8Len)
 
 #endif
 
+
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 #ifdef SER1_SENDING_MODE_POLLING
 
@@ -302,11 +326,13 @@ void ser1_Start_Sending (void)
 
 #endif
 
+
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 void SER1_SndBuf_Put (TUINT8 u8Data)
 {
@@ -315,10 +341,11 @@ void SER1_SndBuf_Put (TUINT8 u8Data)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 TUINT8 SER1_u8SndBuf_Get (void)
 {
@@ -328,10 +355,11 @@ TUINT8 SER1_u8SndBuf_Get (void)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/
 
 TUINT8 SER1_u8SndBuf_Empty (void)
 {
@@ -339,10 +367,11 @@ TUINT8 SER1_u8SndBuf_Empty (void)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/ 
 
 void SER1_RecBuf_Put (TUINT8 u8Data)
 {
@@ -351,10 +380,11 @@ void SER1_RecBuf_Put (TUINT8 u8Data)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/ 
 
 TUINT8 SER1_u8RecBuf_Get (void)
 {
@@ -364,25 +394,25 @@ TUINT8 SER1_u8RecBuf_Get (void)
 }
 
 /******************************************************************************
-   Description    :
-   Parameter      :
-   Return-Value   :
-******************************************************************************/   
+*  Function Name  :  
+*  Description    :  
+*  Parameter(s)   :  
+*  Return Value   :  
+******************************************************************************/ 
 
 TUINT8 SER1_u8RecBuf_Empty (void)
 {
   return ser1_u16RecBuf_Head == ser1_u16RecBuf_Tail;
 }
 
+
 /******************************************************************************
+*  Changes        :  
+*                    
+*                    
+*                    
+******************************************************************************/
 
-   Changes
-
-   a)   In der Funktion SER1_Protocol_Handling:
-
-        if (!SER1_u8RecBuf_Empty())    ge�ndert zu if ((!SER1_u8RecBuf_Empty()) && (!ser1_u8Valid_Data))
-
-   b) void SER1_Protocol_Handling(TUINT8 u8Cycles) cycles eingef�gt
-
-
+/******************************************************************************
+*  END OF FILE    :  ser1.h
 ******************************************************************************/
